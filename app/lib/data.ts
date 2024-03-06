@@ -178,6 +178,24 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+export async function fetchAllCustomers() {
+  noStore();
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name
+      FROM customers
+      ORDER BY name ASC
+    `;
+
+    return data.rows;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all customers.');
+  }
+}
+
 export async function fetchCustomers(currentPage: number) {
   noStore();
   try {
@@ -194,7 +212,7 @@ export async function fetchCustomers(currentPage: number) {
     return data.rows;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    throw new Error('Failed to fetch customers.');
   }
 }
 
